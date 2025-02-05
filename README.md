@@ -1,16 +1,58 @@
-# weather_app_flutter
+# Weather App 🌦️
 
-A new Flutter project.
+A simple yet visually appealing Flutter weather app that provides real-time weather updates with animations using the Lottie library. The app fetches weather data from [OpenWeather](https://openweathermap.org/) and includes location-based weather retrieval.
 
-## Getting Started
+## Features 🚀
+- 📍 Fetches weather data based on user's current location
+- 🌤️ Beautiful Lottie animations for different weather conditions
+- 🔄 Loading animations while fetching data
+- 📡 API integration with OpenWeather
+- 📌 Displays city name, weather condition, and temperature
+- 🧭 Uses `geolocator` and `geocoding` to determine location
+- 🛠 Built with Flutter and Provider for state management
 
-This project is a starting point for a Flutter application.
+## Screenshots 📸
+![Weather App Screenshot](./weather.png)
+This is a dummy screenshot
 
-A few resources to get you started if this is your first Flutter project:
+## Dependencies 📦
+```yaml
+  cupertino_icons: ^1.0.2
+  http: ^1.1.0
+  geolocator: ^10.1.0
+  geocoding: ^2.1.1
+  lottie: ^2.7.0
+  awesome_extensions: ^2.0.17
+  provider: ^6.1.2
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Installation 🛠
+1. Clone this repository:
+   ```sh
+   git clone https://github.com/iRahulGaur/weather_app_flutter.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd weather_app_flutter
+   ```
+3. Install dependencies:
+   ```sh
+   flutter pub get
+   ```
+4. Run the app:
+   ```sh
+   flutter run
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## API Setup 🔑
+1. Sign up on [OpenWeather](https://openweathermap.org/) and get an API key.
+2. Add the API key in your project where necessary.
+
+## Contributions 🤝
+Feel free to fork and contribute to this project by creating a pull request.
+
+## License 📄
+This project is open-source and available under the MIT License.
+
+---
+🌟 Don't forget to give the repository a star if you found it useful! 😊
