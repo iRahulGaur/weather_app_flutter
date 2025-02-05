@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:weather_app_flutter/models/weather_model.dart';
 
 class WeatherService {
-  static const BASE_URL = "https://api.openweathermap.org/data/3.0/onecall";
+  static const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
   final String apiKey;
 
   WeatherService(this.apiKey);
@@ -17,6 +17,8 @@ class WeatherService {
     if (response.statusCode == 200) {
       return Weather.fromJson(jsonDecode(response.body));
     } else {
+      print('this is response code = ${response.statusCode} ');
+      print('this is response body = ${response.body} ');
       throw Exception('Error fetching weather data');
     }
   }
