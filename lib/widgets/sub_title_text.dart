@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class SubTitleText extends StatelessWidget {
   final String text;
+
   const SubTitleText({super.key, required this.text});
 
   @override

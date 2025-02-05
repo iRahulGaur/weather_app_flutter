@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:weather_app_flutter/constants_values.dart';
-import 'package:weather_app_flutter/models/weather_model.dart';
-import 'package:weather_app_flutter/services/weather_service.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app_flutter/providers/weather_provider.dart';
+import 'package:weather_app_flutter/widgets/loading_widget.dart';
+
+import '../models/weather_model.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -12,34 +14,7 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  //api key
-  final _weatherService = WeatherService(ConstantsValues.getAPIKey());
-  Weather? _weather;
-
-  //fetch weather
-  _fetchWeather() async {
-    //get the current lat long
-    String latlon = await _weatherService.getCurrentCity();
-    List<String> locations = latlon.split(" + ");
-
-    //get weather
-    try {
-      final weather =
-          await _weatherService.getWeather(locations[0], locations[1]);
-      setState(() {
-        _weather = weather;
-      });
-    }
-
-    // any errors
-    catch (e) {
-      print(e);
-    }
-
-    print('this is weather = $_weather');
-  }
-
-  //weather animation
+  // Weather animations
   String getWeatherAnimation(String? mainCondition) {
     if (mainCondition == null) {
       return 'assets/sunny.json';
@@ -66,33 +41,43 @@ class _WeatherPageState extends State<WeatherPage> {
     }
   }
 
-  //init state
   @override
   void initState() {
     super.initState();
-
-    //fetch weather on start
-    _fetchWeather();
   }
 
   @override
   Widget build(BuildContext context) {
+    return Consumer<WeatherProvider>(
+        builder: (context, weatherProvider, child) {
+      if (weatherProvider.lastFetchedWheater == null) {
+        weatherProvider.fetchWeatherForCurrentCity();
+      }
+
+      return Scaffold(
+        body: Center(
+            child: weatherProvider.lastFetchedWheater == null
+                ? LoadingWidget(title: "Getting weather data ...")
+                : getLoadedWiget(weatherProvider.lastFetchedWheater!)),
+      );
+    });
+  }
+
+  Widget getLoadedWiget(Weather weather) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          _weather?.cityName ?? "Loading",
-          style: const TextStyle(fontSize: 20),
-        ),
-        // Lottie.asset('assets/rain.json'),
-        Text(
-          "${_weather?.temperature.round()}°C",
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          "${weather.temperature.round()}°C",
+          style: const TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
         ),
         Text(
-          _weather?.mainCondition ?? "",
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          weather.cityName,
+          style: const TextStyle(fontSize: 30),
         ),
+        const SizedBox(height: 20),
+        Lottie.asset(getWeatherAnimation(weather.mainCondition)),
+        const SizedBox(height: 20),
       ],
     );
   }
